@@ -262,14 +262,18 @@ void sort_quick_nonrec(int* arr, size_t size)
         //получаем медиану
         int left = medians[ind], right = medians[ind + 1],
             med = separAndGetMed(arr, left, right);
-        //если медиана совпала с левым индексом, значит элемент
-        //наименьший из этой последовательности
-        if (med == left) {
+        if (med != left) {
+          medians.emplace(medians.cbegin() + ind + 1, med);
+        } //если медиана совпала с левым эл-ом значит он минимальный  
+        else {
+          //если это не соседние элементы
+          if (left != right - 1) {
             ++med;
             //вставляем эту медиану
             medians.emplace(medians.cbegin() + ind + 1, med);
-            //перемещаемся к следующей
-            ++ind;
+          } 
+          //двигаемся к следующей медиане
+          ++ind;
         }
     }
 }
